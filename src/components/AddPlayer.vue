@@ -11,7 +11,7 @@ const emit = defineEmits(["addPlayer"]);
       v-model="username"
       placeholder="skriv ditt användarnamn"
     />
-    <button type="button"></button>
+    <button type="button">+ Lägg till spelare</button>
   </form>
 </template>
 
