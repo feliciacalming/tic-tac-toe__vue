@@ -1,6 +1,10 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import ShowGame from "./components/ShowGame.vue";
+</script>
 
-<template></template>
+<template>
+  <ShowGame></ShowGame>
+</template>
 
 <style scoped>
 .logo {
