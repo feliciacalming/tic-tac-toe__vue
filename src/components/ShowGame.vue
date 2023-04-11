@@ -1,11 +1,15 @@
 <script setup lang="ts">
-const emit = defineEmits(["togglePlayer"]);
+import { onMounted } from "vue";
+import { Player } from "../models/Player";
+
+const emit = defineEmits(["switchTurns"]);
+defineProps<{ player: string }>();
 </script>
 
 <template>
-  <h3>Det är x tur</h3>
+  <h3>Det är {{ player }}s tur</h3>
   <div class="game-container">
-    <div v-for="index in 9" :key="index" @click="emit('togglePlayer')">
+    <div v-for="index in 9" :key="index" @click="emit('switchTurns')">
       {{ index }}
     </div>
   </div>

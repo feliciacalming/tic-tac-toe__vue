@@ -20,11 +20,17 @@ const addPlayer = (name: string) => {
   }
 
   gameState.value.players.push(new Player(id, name, 0));
+  gameState.value.activePlayer = gameState.value.players[0];
   saveToLocalStorage(gameState.value);
 };
 
-const togglePlayer = () => {
-  console.log(gameState.value.activePlayer);
+const switchTurns = () => {
+  if (gameState.value.activePlayer === gameState.value.players[0]) {
+    gameState.value.activePlayer = gameState.value.players[1];
+    return;
+  } else if (gameState.value.activePlayer.playerId === 2) {
+    gameState.value.activePlayer = gameState.value.players[0];
+  }
 };
 </script>
 
@@ -33,5 +39,11 @@ const togglePlayer = () => {
     @add-player="addPlayer"
     v-if="gameState.players.length < 2"
   ></AddPlayer>
-  <ShowGame @toggle-player="togglePlayer" v-else> ></ShowGame>
+  <ShowGame
+    :player="gameState.activePlayer.username"
+    @toggle-player="switchTurns"
+    v-else
+  >
+    ></ShowGame
+  >
 </template>
