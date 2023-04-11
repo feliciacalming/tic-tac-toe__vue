@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import ShowGame from "./components/ShowGame.vue";
+import AddPlayer from "./components/AddPlayer.vue";
+import GameApp from "./components/GameApp.vue";
 </script>
 
 <template>
-  <ShowGame></ShowGame>
+  <GameApp></GameApp>
 </template>
 
 <style scoped>

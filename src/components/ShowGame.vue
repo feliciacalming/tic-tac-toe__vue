@@ -1,11 +1,13 @@
 <script setup lang="ts">
-let id: number = 0;
+const emit = defineEmits(["togglePlayer"]);
 </script>
 
 <template>
   <h3>Det är x tur</h3>
   <div class="game-container">
-    <div v-for="index in 9" :key="index">{{ index }}</div>
+    <div v-for="index in 9" :key="index" @click="emit('togglePlayer')">
+      {{ index }}
+    </div>
   </div>
 </template>
 
