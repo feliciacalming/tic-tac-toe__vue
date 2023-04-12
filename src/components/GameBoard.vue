@@ -9,10 +9,20 @@ interface IGameProps {
 
 const emit = defineEmits(["switchTurns", "markSquare"]);
 const props = defineProps<IGameProps>();
-
-let symbol = ref("X");
 </script>
 
 <template>
-  <div @click="emit('switchTurns'), emit('markSquare')">{{ symbol }}</div>
+  <div @click="emit('switchTurns'), emit('markSquare')">
+    {{ props.game.gameboard[index] }}
+  </div>
 </template>
+
+<style scoped lang="scss">
+.x {
+  background-color: pink;
+}
+
+.o {
+  background-color: purple;
+}
+</style>
