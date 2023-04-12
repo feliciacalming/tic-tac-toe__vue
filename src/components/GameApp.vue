@@ -8,12 +8,10 @@ import GameBoard from "./GameBoard.vue";
 
 const gameState = ref<IGameState>({
   players: [],
-  gameboard: [0, 0, 7, 5, 0, 0, 0, 0, 0],
+  gameboard: [0, 0, 0, 0, 0, 0, 0, 0, 0],
   activePlayer: new Player(1, "", 0),
   isGameActive: true,
 });
-
-let playerSymbol = ref("");
 
 const addPlayer = (name: string) => {
   let id = 1;
@@ -28,19 +26,16 @@ const addPlayer = (name: string) => {
 };
 
 const switchTurns = (index: number) => {
-  gameState.value.gameboard[index] = 2;
-  console.log(JSON.parse(JSON.stringify(gameState.value.gameboard)));
-
-  console.log(index);
   if (gameState.value.activePlayer === gameState.value.players[0]) {
-    playerSymbol.value = "X";
     gameState.value.activePlayer = gameState.value.players[1];
   } else if (gameState.value.activePlayer.playerId === 2) {
-    playerSymbol.value = "O";
     gameState.value.activePlayer = gameState.value.players[0];
   }
+};
 
-  console.log(gameState.value.activePlayer);
+const markSquare = (index: number) => {
+  gameState.value.gameboard[index] = gameState.value.activePlayer.playerId;
+  console.log(JSON.parse(JSON.stringify(gameState.value.gameboard)));
 };
 </script>
 
@@ -55,10 +50,10 @@ const switchTurns = (index: number) => {
     <div class="game-container">
       <GameBoard
         :index="index"
-        :player-symbol="playerSymbol"
         :game="gameState"
         v-for="(square, index) in gameState.gameboard"
         @switch-turns="switchTurns(index)"
+        @mark-square="markSquare(index)"
       >
       </GameBoard>
     </div>
