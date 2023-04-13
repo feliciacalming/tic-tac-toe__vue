@@ -1,7 +1,7 @@
 export class Player {
   constructor(
-    public playerId: number,
     public username: string,
+    public playerSymbol: string,
     public score: number
   ) {}
 }
