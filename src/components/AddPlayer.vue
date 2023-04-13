@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+
 let username = ref("");
 const emit = defineEmits(["addPlayer"]);
 </script>
@@ -19,5 +20,7 @@ const emit = defineEmits(["addPlayer"]);
 input {
   width: 30vw;
   text-align: center;
+  background-color: white;
+  border: 1px solid black;
 }
 </style>
