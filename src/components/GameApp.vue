@@ -13,6 +13,17 @@ const gameState = ref<IGameState>({
   isGameActive: true,
 });
 
+const winningCombinations = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
+
 const addPlayer = (name: string) => {
   let id = 1;
 
@@ -35,7 +46,37 @@ const switchTurns = (index: number) => {
 
 const markSquare = (index: number) => {
   gameState.value.gameboard[index] = gameState.value.activePlayer.playerId;
-  console.log(JSON.parse(JSON.stringify(gameState.value.gameboard)));
+};
+
+const checkValues = () => {
+  let player1Results: number[] = [];
+  let player2Results: number[] = [];
+
+  gameState.value.gameboard.forEach((currentValue, index) => {
+    currentValue === 1
+      ? player1Results.push(index)
+      : currentValue === 2
+      ? player2Results.push(index)
+      : null;
+  });
+
+  for (let i = 0; i < winningCombinations.length; i++) {
+    let checkPlayer1 = winningCombinations[i].every((element) =>
+      player1Results.includes(element)
+    );
+
+    let checkPlayer2 = winningCombinations[i].every((element) =>
+      player2Results.includes(element)
+    );
+
+    if (checkPlayer1) {
+      console.log("Grattis spelare 1!");
+    }
+
+    if (checkPlayer2) {
+      console.log("Grattis spelare 2!");
+    }
+  }
 };
 </script>
 
@@ -54,6 +95,7 @@ const markSquare = (index: number) => {
         v-for="(square, index) in gameState.gameboard"
         @switch-turns="switchTurns(index)"
         @mark-square="markSquare(index)"
+        @check-values="checkValues"
       >
       </GameBoard>
     </div>
