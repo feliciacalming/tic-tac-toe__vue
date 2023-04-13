@@ -2,7 +2,7 @@ import { Player } from "./Player";
 
 export interface IGameState {
   players: Player[];
-  gameboard: number[];
+  gameboard: string[];
   activePlayer: Player;
   isGameActive: boolean;
 }
