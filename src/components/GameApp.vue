@@ -10,7 +10,7 @@ import GameResults from "./GameResults.vue";
 const gameState = ref<IGameState>({
   players: [],
   gameboard: ["", "", "", "", "", "", "", "", ""],
-  activePlayer: new Player("", "", 0),
+  activePlayer: new Player("", "", [], 0),
   isGameActive: true,
 });
 
@@ -26,15 +26,13 @@ const winningCombinations = [
 ];
 
 const addPlayer = (name: string) => {
-  let id = 1;
   let symbol = "X";
 
   if (gameState.value.players.length > 0) {
-    id++;
     symbol = "O";
   }
 
-  gameState.value.players.push(new Player(name, symbol, 0));
+  gameState.value.players.push(new Player(name, symbol, [], 0));
   gameState.value.activePlayer = gameState.value.players[0];
   saveToLocalStorage(gameState.value);
 };
@@ -52,36 +50,26 @@ const markSquare = (index: number) => {
 };
 
 const checkValues = () => {
-  let player1Results: number[] = [];
-  let player2Results: number[] = [];
-
   gameState.value.gameboard.forEach((currentValue, index) => {
-    currentValue === "X"
-      ? player1Results.push(index)
-      : currentValue === "O"
-      ? player2Results.push(index)
+    currentValue === gameState.value.activePlayer.playerSymbol
+      ? gameState.value.activePlayer.checkedSquares.push(index)
       : null;
   });
 
   for (let i = 0; i < winningCombinations.length; i++) {
-    let checkPlayer1 = winningCombinations[i].every((element) =>
-      player1Results.includes(element)
+    let checkPlayer = winningCombinations[i].every((element) =>
+      gameState.value.activePlayer.checkedSquares.includes(element)
     );
 
-    let checkPlayer2 = winningCombinations[i].every((element) =>
-      player2Results.includes(element)
-    );
-
-    if (checkPlayer1) {
+    if (checkPlayer) {
       gameState.value.isGameActive = false;
-      console.log("Grattis spelare 1!");
-    }
-
-    if (checkPlayer2) {
-      gameState.value.isGameActive = false;
-      console.log("Grattis spelare 2!");
+      gameState.value.activePlayer.score += 1;
     }
   }
+};
+
+const startNewGame = () => {
+  window.location.reload();
 };
 </script>
 
@@ -91,7 +79,7 @@ const checkValues = () => {
     v-if="gameState.players.length < 2"
   ></AddPlayer>
 
-  <div class="show-game" v-else>
+  <div class="show-game" v-else v-if="gameState.isGameActive">
     <h3>Det är {{ gameState.activePlayer.username }}s tur</h3>
     <div class="game-container">
       <GameBoard
@@ -106,7 +94,11 @@ const checkValues = () => {
     </div>
   </div>
 
-  <GameResults v-if="!gameState.isGameActive"></GameResults>
+  <GameResults
+    :winning-player="gameState.activePlayer"
+    v-if="!gameState.isGameActive"
+    @start-new-game="startNewGame"
+  ></GameResults>
 </template>
 
 <style scoped lang="scss">
