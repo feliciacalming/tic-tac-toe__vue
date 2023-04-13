@@ -15,16 +15,12 @@ const props = defineProps<IGameProps>();
   <div
     @click.once="emit('switchTurns'), emit('markSquare'), emit('checkValues')"
   >
-    {{ props.game.gameboard[index] }}
+    <span class="game-symbol"> {{ props.game.gameboard[index] }} </span>
   </div>
 </template>
 
 <style scoped lang="scss">
-.x {
-  background-color: pink;
-}
-
-.o {
-  background-color: purple;
+.game-symbol {
+  font-size: 3rem;
 }
 </style>
