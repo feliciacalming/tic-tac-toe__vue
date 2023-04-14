@@ -6,13 +6,16 @@ import { saveToLocalStorage } from "../helpers/localStorage";
 import AddPlayer from "./AddPlayer.vue";
 import GameBoard from "./GameBoard.vue";
 import GameResults from "./GameResults.vue";
+import { getFromLocalStorage } from "../helpers/localStorage";
 
-let gameState = ref<IGameState>({
-  players: [],
-  gameboard: ["", "", "", "", "", "", "", "", ""],
-  activePlayer: new Player("", "", [], 0),
-  isGameActive: true,
-});
+// let gameState = ref<IGameState>({
+//   players: [],
+//   gameboard: ["", "", "", "", "", "", "", "", ""],
+//   activePlayer: new Player("", "", [], 0),
+//   isGameActive: true,
+// });
+
+let gameState = ref<IGameState>(getFromLocalStorage());
 
 const winningCombinations = [
   [0, 1, 2],
@@ -83,12 +86,17 @@ const startNewGame = () => {
 
 const playAgain = () => {
   gameState.value.isGameActive = true;
-  gameState.value.gameboard.forEach((square) => {
-    square = "";
-  });
-  gameState.value.players.forEach((player) => {
-    player.checkedSquares.splice(0);
-  });
+
+  gameState.value.activePlayer.checkedSquares = [];
+
+  for (let i = 0; i < gameState.value.gameboard.length; i++) {
+    gameState.value.gameboard[i] = "";
+  }
+
+  for (let i = 0; i < gameState.value.players.length; i++) {
+    gameState.value.players[i].checkedSquares = [];
+  }
+
   saveToLocalStorage(gameState.value);
   console.log(gameState.value);
   window.location.reload();
