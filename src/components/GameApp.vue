@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { Player } from "../models/Player";
-import AddPlayer from "./AddPlayer.vue";
 import { IGameState } from "../models/IGameState";
 import { saveToLocalStorage } from "../helpers/localStorage";
+import AddPlayer from "./AddPlayer.vue";
 import GameBoard from "./GameBoard.vue";
 import GameResults from "./GameResults.vue";
+import { getFromLocalStorage } from "../helpers/localStorage";
+import { Game } from "../models/Game";
 
-const gameState = ref<IGameState>({
+let gameState = ref<IGameState>({
   players: [],
   gameboard: ["", "", "", "", "", "", "", "", ""],
   activePlayer: new Player("", "", [], 0),
@@ -34,19 +36,22 @@ const addPlayer = (name: string) => {
 
   gameState.value.players.push(new Player(name, symbol, [], 0));
   gameState.value.activePlayer = gameState.value.players[0];
+  console.log(gameState.value.activePlayer);
   saveToLocalStorage(gameState.value);
 };
 
 const switchTurns = (index: number) => {
+  gameState.value.gameboard[index] = gameState.value.activePlayer.playerSymbol;
+  console.log(JSON.parse(JSON.stringify(gameState.value.gameboard)));
   if (gameState.value.activePlayer === gameState.value.players[0]) {
     gameState.value.activePlayer = gameState.value.players[1];
-  } else if (gameState.value.activePlayer.playerSymbol === "O") {
+  } else {
     gameState.value.activePlayer = gameState.value.players[0];
   }
 };
 
 const markSquare = (index: number) => {
-  gameState.value.gameboard[index] = gameState.value.activePlayer.playerSymbol;
+  // gameState.value.gameboard[index] = gameState.value.activePlayer.playerSymbol;
 };
 
 const checkValues = () => {
@@ -55,6 +60,8 @@ const checkValues = () => {
       ? gameState.value.activePlayer.checkedSquares.push(index)
       : null;
   });
+
+  console.log(JSON.parse(JSON.stringify(gameState.value.players)));
 
   for (let i = 0; i < winningCombinations.length; i++) {
     let checkPlayer = winningCombinations[i].every((element) =>
@@ -69,6 +76,20 @@ const checkValues = () => {
 };
 
 const startNewGame = () => {
+  window.location.reload();
+  localStorage.clear();
+};
+
+const playAgain = () => {
+  gameState.value.isGameActive = true;
+  gameState.value.gameboard.forEach((square) => {
+    square = "";
+  });
+  gameState.value.players.forEach((player) => {
+    player.checkedSquares.splice(0);
+  });
+  saveToLocalStorage(gameState.value);
+  console.log(gameState.value);
   window.location.reload();
 };
 </script>
@@ -89,6 +110,7 @@ const startNewGame = () => {
         @switch-turns="switchTurns(index)"
         @mark-square="markSquare(index)"
         @check-values="checkValues"
+        @save-to-l-s="saveToLocalStorage(gameState)"
       >
       </GameBoard>
     </div>
@@ -98,6 +120,7 @@ const startNewGame = () => {
     :winning-player="gameState.activePlayer"
     v-if="!gameState.isGameActive"
     @start-new-game="startNewGame"
+    @play-again="playAgain"
   ></GameResults>
 </template>
 

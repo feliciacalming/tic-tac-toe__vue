@@ -2,7 +2,7 @@
 import { Player } from "../models/Player";
 
 defineProps<{ winningPlayer: Player }>();
-const emit = defineEmits(["startNewGame"]);
+const emit = defineEmits(["startNewGame", "playAgain"]);
 </script>
 
 <template>
@@ -10,7 +10,7 @@ const emit = defineEmits(["startNewGame"]);
     <span>Grattis {{ winningPlayer.username }}!</span>
   </div>
   <button @click="emit('startNewGame')">Starta ett nytt spel!</button>
-  <button>Spela en omgång till!</button>
+  <button @click="emit('playAgain')">Spela en omgång till!</button>
 </template>
 
 <style scoped lang="scss">
