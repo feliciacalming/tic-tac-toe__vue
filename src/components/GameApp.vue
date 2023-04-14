@@ -6,8 +6,6 @@ import { saveToLocalStorage } from "../helpers/localStorage";
 import AddPlayer from "./AddPlayer.vue";
 import GameBoard from "./GameBoard.vue";
 import GameResults from "./GameResults.vue";
-import { getFromLocalStorage } from "../helpers/localStorage";
-import { Game } from "../models/Game";
 
 let gameState = ref<IGameState>({
   players: [],
@@ -36,13 +34,15 @@ const addPlayer = (name: string) => {
 
   gameState.value.players.push(new Player(name, symbol, [], 0));
   gameState.value.activePlayer = gameState.value.players[0];
-  console.log(gameState.value.activePlayer);
   saveToLocalStorage(gameState.value);
 };
 
-const switchTurns = (index: number) => {
+const markSquare = (index: number) => {
   gameState.value.gameboard[index] = gameState.value.activePlayer.playerSymbol;
-  console.log(JSON.parse(JSON.stringify(gameState.value.gameboard)));
+};
+
+const switchTurns = (index: number) => {
+  // gameState.value.gameboard[index] = gameState.value.activePlayer.playerSymbol;
   if (gameState.value.activePlayer === gameState.value.players[0]) {
     gameState.value.activePlayer = gameState.value.players[1];
   } else {
@@ -50,18 +50,18 @@ const switchTurns = (index: number) => {
   }
 };
 
-const markSquare = (index: number) => {
-  // gameState.value.gameboard[index] = gameState.value.activePlayer.playerSymbol;
-};
-
 const checkValues = () => {
-  gameState.value.gameboard.forEach((currentValue, index) => {
-    currentValue === gameState.value.activePlayer.playerSymbol
-      ? gameState.value.activePlayer.checkedSquares.push(index)
-      : null;
-  });
+  let chosenIndex = 0;
 
-  console.log(JSON.parse(JSON.stringify(gameState.value.players)));
+  gameState.value.gameboard.forEach((currentValue, index) => {
+    if (currentValue === gameState.value.activePlayer.playerSymbol) {
+      chosenIndex = index;
+
+      if (!gameState.value.activePlayer.checkedSquares.includes(chosenIndex)) {
+        gameState.value.activePlayer.checkedSquares.push(chosenIndex);
+      }
+    }
+  });
 
   for (let i = 0; i < winningCombinations.length; i++) {
     let checkPlayer = winningCombinations[i].every((element) =>
