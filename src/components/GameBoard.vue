@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import { IGameState } from "../models/IGameState";
 
 interface IGameProps {
@@ -7,13 +6,24 @@ interface IGameProps {
   game: IGameState;
 }
 
-const emit = defineEmits(["switchTurns", "markSquare", "checkValues"]);
+const emit = defineEmits([
+  "switchTurns",
+  "markSquare",
+  "checkValues",
+  "saveToLS",
+]);
+
 const props = defineProps<IGameProps>();
 </script>
 
 <template>
   <div
-    @click.once="emit('switchTurns'), emit('markSquare'), emit('checkValues')"
+    @click.once="
+      emit('switchTurns'),
+        emit('markSquare'),
+        emit('checkValues'),
+        emit('saveToLS')
+    "
   >
     <span class="game-symbol"> {{ props.game.gameboard[index] }} </span>
   </div>
