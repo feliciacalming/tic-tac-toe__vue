@@ -42,11 +42,12 @@ const markSquare = (index: number) => {
 };
 
 const switchTurns = (index: number) => {
-  // gameState.value.gameboard[index] = gameState.value.activePlayer.playerSymbol;
-  if (gameState.value.activePlayer === gameState.value.players[0]) {
-    gameState.value.activePlayer = gameState.value.players[1];
-  } else {
-    gameState.value.activePlayer = gameState.value.players[0];
+  if (gameState.value.isGameActive) {
+    if (gameState.value.activePlayer === gameState.value.players[0]) {
+      gameState.value.activePlayer = gameState.value.players[1];
+    } else {
+      gameState.value.activePlayer = gameState.value.players[0];
+    }
   }
 };
 
