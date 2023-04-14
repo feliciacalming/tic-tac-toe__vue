@@ -19,9 +19,9 @@ const props = defineProps<IGameProps>();
 <template>
   <div
     @click.once="
-      emit('switchTurns'),
-        emit('markSquare'),
+      emit('markSquare'),
         emit('checkValues'),
+        emit('switchTurns'),
         emit('saveToLS')
     "
   >
