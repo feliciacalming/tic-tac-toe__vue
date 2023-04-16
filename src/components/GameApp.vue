@@ -7,41 +7,28 @@ import AddPlayer from "./AddPlayer.vue";
 import GameBoard from "./GameBoard.vue";
 import GameResults from "./GameResults.vue";
 import { getFromLocalStorage } from "../helpers/localStorage";
-
-// let gameState = ref<IGameState>({
-//   players: [],
-//   gameboard: ["", "", "", "", "", "", "", "", ""],
-//   activePlayer: new Player("", "", [], 0),
-//   isGameActive: true,
-// });
+import { winningCombinations } from "../models/winningCombinations";
 
 let gameState = ref<IGameState>(getFromLocalStorage());
-
-const winningCombinations = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6],
-];
+let winningPlayer = "";
 
 const addPlayer = (name: string) => {
   let symbol = "X";
+  let i = Math.floor(Math.random() * 2);
 
   if (gameState.value.players.length > 0) {
     symbol = "O";
   }
 
   gameState.value.players.push(new Player(name, symbol, [], 0));
-  gameState.value.activePlayer = gameState.value.players[0];
+  gameState.value.activePlayer = gameState.value.players[i];
   saveToLocalStorage(gameState.value);
 };
 
 const markSquare = (index: number) => {
   gameState.value.gameboard[index] = gameState.value.activePlayer.playerSymbol;
+  console.log("mark square");
+  console.log(gameState.value);
 };
 
 const switchTurns = (index: number) => {
@@ -52,12 +39,15 @@ const switchTurns = (index: number) => {
       gameState.value.activePlayer = gameState.value.players[0];
     }
   }
+
+  console.log("switch turns");
+  console.log(gameState.value);
 };
 
 const checkValues = () => {
   let chosenIndex = 0;
 
-  gameState.value.gameboard.forEach((currentValue, index) => {
+  gameState.value.gameboard.forEach((currentValue: string, index: number) => {
     if (currentValue === gameState.value.activePlayer.playerSymbol) {
       chosenIndex = index;
 
@@ -75,6 +65,7 @@ const checkValues = () => {
     if (checkPlayer) {
       gameState.value.isGameActive = false;
       gameState.value.activePlayer.score += 1;
+      winningPlayer = gameState.value.activePlayer.username;
     }
   }
 };
@@ -97,9 +88,9 @@ const playAgain = () => {
     gameState.value.players[i].checkedSquares = [];
   }
 
+  window.location.reload();
   saveToLocalStorage(gameState.value);
   console.log(gameState.value);
-  window.location.reload();
 };
 </script>
 
@@ -126,7 +117,7 @@ const playAgain = () => {
   </div>
 
   <GameResults
-    :winning-player="gameState.activePlayer"
+    :winning-player="winningPlayer"
     v-if="!gameState.isGameActive"
     @start-new-game="startNewGame"
     @play-again="playAgain"
