@@ -2,6 +2,8 @@
 import AddPlayer from "./AddPlayer.vue";
 import GameBoard from "./GameBoard.vue";
 import GameResults from "./GameResults.vue";
+import RestartButton from "./RestartButton.vue";
+import ResetButton from "./ResetButton.vue";
 import { ref } from "vue";
 import { Player } from "../models/Player";
 import { IGameState } from "../models/IGameState";
@@ -11,7 +13,7 @@ import { winningCombinations } from "../models/winningCombinations";
 import { getRandomNumber } from "../helpers/getRandomNumber";
 
 let gameState = ref<IGameState>(createGameState());
-let winningPlayer = ref("");
+let message = ref("");
 
 const addPlayer = (name: string) => {
   let symbol = "X";
@@ -28,23 +30,25 @@ const addPlayer = (name: string) => {
 
 const markSquare = (index: number) => {
   gameState.value.gameboard[index] = gameState.value.activePlayer.playerSymbol;
-  console.log("mark square");
+  gameState.value.squaresChecked += 1;
+  console.log(gameState.value.squaresChecked);
 };
 
-const switchTurns = (index: number) => {
-  // if (gameState.value.isGameActive) {
+const switchTurns = () => {
   if (gameState.value.activePlayer == gameState.value.players[0]) {
     gameState.value.activePlayer = gameState.value.players[1];
   } else {
     gameState.value.activePlayer = gameState.value.players[0];
   }
-  // }
-
-  console.log("switch turns");
 };
 
 const checkValues = () => {
   let chosenIndex = 0;
+
+  if (gameState.value.squaresChecked > 8) {
+    gameState.value.isGameActive = false;
+    message.value = "Det blev oavgjort!";
+  }
 
   gameState.value.gameboard.forEach((currentValue: string, index: number) => {
     if (currentValue === gameState.value.activePlayer.playerSymbol) {
@@ -64,7 +68,7 @@ const checkValues = () => {
     if (checkPlayer) {
       gameState.value.isGameActive = false;
       gameState.value.activePlayer.score += 1;
-      winningPlayer.value = gameState.value.activePlayer.username;
+      message.value = `Grattis ${gameState.value.activePlayer.username}! 🎉`;
     }
   }
 };
@@ -76,8 +80,7 @@ const startNewGame = () => {
 
 const playAgain = () => {
   gameState.value.isGameActive = true;
-
-  // gameState.value.activePlayer.checkedSquares = [];
+  gameState.value.squaresChecked = 0;
 
   for (let i = 0; i < gameState.value.gameboard.length; i++) {
     gameState.value.gameboard[i] = "";
@@ -106,22 +109,32 @@ const playAgain = () => {
         :index="index"
         :game="gameState"
         v-for="(square, index) in gameState.gameboard"
-        @switch-turns="switchTurns(index)"
+        @switch-turns="switchTurns()"
         @mark-square="markSquare(index)"
         @check-values="checkValues"
         @save-to-l-s="saveToLocalStorage(gameState)"
       >
       </GameBoard>
     </div>
+    <div class="button-container">
+      <RestartButton @play-again="playAgain"></RestartButton>
+      <ResetButton @start-new-game="startNewGame"></ResetButton>
+    </div>
   </div>
 
-  <GameResults
-    :winning-player="winningPlayer"
-    :players="gameState.players"
-    v-if="!gameState.isGameActive"
-    @start-new-game="startNewGame"
-    @play-again="playAgain"
-  ></GameResults>
+  <div v-if="!gameState.isGameActive">
+    <GameResults
+      :message="message"
+      :players="gameState.players"
+      @start-new-game="startNewGame"
+      @play-again="playAgain"
+    ></GameResults>
+
+    <div class="button-container">
+      <RestartButton @play-again="playAgain"></RestartButton>
+      <ResetButton @start-new-game="startNewGame"></ResetButton>
+    </div>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -140,5 +153,12 @@ const playAgain = () => {
     width: 80px;
     height: 80px;
   }
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 2rem;
 }
 </style>

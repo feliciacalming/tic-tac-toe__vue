@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { Player } from "../models/Player";
+import RestartButton from "./RestartButton.vue";
 
 interface IGameResults {
-  winningPlayer: string;
+  message: string;
   players: Player[];
 }
 
 const props = defineProps<IGameResults>();
-const emit = defineEmits(["startNewGame", "playAgain"]);
 </script>
 
 <template>
   <div class="scoreboard">
-    <span class="scoreboard__heading">Grattis {{ winningPlayer }}! 🎉</span>
-    <h2 class="scoreboard__points">Poäng:</h2>
+    <span class="scoreboard__heading">{{ message }}</span>
+
     <div class="scoreboard__players">
       <div class="scoreboard__player">
         <h4>{{ players[0].username }}</h4>
@@ -25,10 +25,6 @@ const emit = defineEmits(["startNewGame", "playAgain"]);
       </div>
     </div>
   </div>
-  <div class="button-container">
-    <button @click="emit('playAgain')">Spela en omgång till!</button>
-    <button @click="emit('startNewGame')">Starta ett nytt spel!</button>
-  </div>
 </template>
 
 <style scoped lang="scss">
@@ -37,8 +33,8 @@ const emit = defineEmits(["startNewGame", "playAgain"]);
   flex-direction: column;
 
   &__heading {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 2rem;
+    margin-bottom: 3rem;
   }
 
   &__points {
@@ -61,12 +57,5 @@ const emit = defineEmits(["startNewGame", "playAgain"]);
 
 h4 {
   margin: 0;
-}
-
-.button-container {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 2rem;
 }
 </style>
