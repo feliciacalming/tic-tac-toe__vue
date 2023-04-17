@@ -12,16 +12,8 @@ export function createGameState(): IGameState {
       gameboard: ["", "", "", "", "", "", "", "", ""],
       activePlayer: new Player("", "", [], 0),
       isGameActive: true,
+      squaresChecked: 0,
     };
-  } else {
-    gameFromLS.players.map((player) => {
-      return new Player(
-        player.username,
-        player.playerSymbol,
-        player.checkedSquares,
-        player.score
-      );
-    });
   }
 
   return gameFromLS;
