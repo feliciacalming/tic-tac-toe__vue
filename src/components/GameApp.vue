@@ -29,7 +29,6 @@ const addPlayer = (name: string) => {
 const markSquare = (index: number) => {
   gameState.value.gameboard[index] = gameState.value.activePlayer.playerSymbol;
   console.log("mark square");
-  console.log(gameState.value);
 };
 
 const switchTurns = (index: number) => {
@@ -42,7 +41,6 @@ const switchTurns = (index: number) => {
   // }
 
   console.log("switch turns");
-  console.log(gameState.value);
 };
 
 const checkValues = () => {
@@ -72,8 +70,8 @@ const checkValues = () => {
 };
 
 const startNewGame = () => {
-  window.location.reload();
   localStorage.clear();
+  window.location.reload();
 };
 
 const playAgain = () => {
@@ -91,10 +89,7 @@ const playAgain = () => {
 
   let i = getRandomNumber();
   gameState.value.activePlayer = gameState.value.players[i];
-
-  console.log(gameState.value);
   saveToLocalStorage(gameState.value);
-  window.location.reload();
 };
 </script>
 
