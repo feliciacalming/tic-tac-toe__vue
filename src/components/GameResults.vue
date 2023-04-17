@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Player } from "../models/Player";
-import RestartButton from "./RestartButton.vue";
 
 interface IGameResults {
   message: string;

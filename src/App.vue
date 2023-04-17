@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import AddPlayer from "./components/AddPlayer.vue";
 import GameApp from "./components/GameApp.vue";
 </script>
 
