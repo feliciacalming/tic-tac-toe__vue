@@ -12,7 +12,7 @@ export function createGameState(): IGameState {
       gameboard: ["", "", "", "", "", "", "", "", ""],
       activePlayer: new Player("", "", [], 0),
       isGameActive: true,
-      squaresChecked: 0,
+      markedSquares: 0,
     };
   }
 

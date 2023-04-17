@@ -5,5 +5,5 @@ export interface IGameState {
   gameboard: string[];
   activePlayer: Player;
   isGameActive: boolean;
-  squaresChecked: number;
+  markedSquares: number;
 }

@@ -30,8 +30,7 @@ const addPlayer = (name: string) => {
 
 const markSquare = (index: number) => {
   gameState.value.gameboard[index] = gameState.value.activePlayer.playerSymbol;
-  gameState.value.squaresChecked += 1;
-  console.log(gameState.value.squaresChecked);
+  gameState.value.markedSquares += 1;
 };
 
 const switchTurns = () => {
@@ -45,7 +44,7 @@ const switchTurns = () => {
 const checkValues = () => {
   let chosenIndex = 0;
 
-  if (gameState.value.squaresChecked > 8) {
+  if (gameState.value.markedSquares > 8) {
     gameState.value.isGameActive = false;
     message.value = "Det blev oavgjort!";
   }
@@ -61,8 +60,8 @@ const checkValues = () => {
   });
 
   for (let i = 0; i < winningCombinations.length; i++) {
-    let checkPlayer = winningCombinations[i].every((element) =>
-      gameState.value.activePlayer.checkedSquares.includes(element)
+    let checkPlayer = winningCombinations[i].every((value) =>
+      gameState.value.activePlayer.checkedSquares.includes(value)
     );
 
     if (checkPlayer) {
@@ -80,7 +79,7 @@ const startNewGame = () => {
 
 const playAgain = () => {
   gameState.value.isGameActive = true;
-  gameState.value.squaresChecked = 0;
+  gameState.value.markedSquares = 0;
 
   for (let i = 0; i < gameState.value.gameboard.length; i++) {
     gameState.value.gameboard[i] = "";
@@ -116,6 +115,7 @@ const playAgain = () => {
       >
       </GameBoard>
     </div>
+
     <div class="button-container">
       <RestartButton @play-again="playAgain"></RestartButton>
       <ResetButton @start-new-game="startNewGame"></ResetButton>
