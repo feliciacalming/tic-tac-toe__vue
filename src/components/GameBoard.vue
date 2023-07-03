@@ -6,25 +6,13 @@ interface IGameProps {
   game: IGameState;
 }
 
-const emit = defineEmits([
-  "switchTurns",
-  "markSquare",
-  "checkValues",
-  "saveToLS",
-]);
+const emit = defineEmits(["switchTurns"]);
 
 const props = defineProps<IGameProps>();
 </script>
 
 <template>
-  <div
-    @click.once="
-      emit('markSquare'),
-        emit('checkValues'),
-        emit('switchTurns'),
-        emit('saveToLS')
-    "
-  >
+  <div @click.once="emit('switchTurns')">
     <span class="game-symbol"> {{ props.game.gameboard[index] }} </span>
   </div>
 </template>

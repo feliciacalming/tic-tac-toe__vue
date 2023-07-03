@@ -28,17 +28,21 @@ const addPlayer = (name: string) => {
   saveToLocalStorage(gameState.value);
 };
 
-const markSquare = (index: number) => {
-  gameState.value.gameboard[index] = gameState.value.activePlayer.playerSymbol;
-  gameState.value.markedSquares += 1;
-};
-
-const switchTurns = () => {
+const switchTurns = (index: number) => {
   if (gameState.value.activePlayer == gameState.value.players[0]) {
     gameState.value.activePlayer = gameState.value.players[1];
   } else {
     gameState.value.activePlayer = gameState.value.players[0];
   }
+
+  markSquare(index);
+  checkValues();
+  saveToLocalStorage(gameState.value);
+};
+
+const markSquare = (index: number) => {
+  gameState.value.gameboard[index] = gameState.value.activePlayer.playerSymbol;
+  gameState.value.markedSquares += 1;
 };
 
 const checkValues = () => {
@@ -108,10 +112,7 @@ const playAgain = () => {
         :index="index"
         :game="gameState"
         v-for="(square, index) in gameState.gameboard"
-        @switch-turns="switchTurns()"
-        @mark-square="markSquare(index)"
-        @check-values="checkValues"
-        @save-to-l-s="saveToLocalStorage(gameState)"
+        @switch-turns="switchTurns(index)"
       >
       </GameBoard>
     </div>
