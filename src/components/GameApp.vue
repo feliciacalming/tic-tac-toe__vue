@@ -144,15 +144,24 @@ const playAgain = () => {
   grid-template-columns: auto auto auto;
   justify-content: center;
 
-  gap: 10px;
+  gap: 8px;
   width: max-content;
   margin: 0;
   padding: 0;
 
   div {
-    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 2px;
+    background-color: white;
     width: 80px;
     height: 80px;
+    box-shadow: -1px 1px black;
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
