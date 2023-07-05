@@ -118,7 +118,10 @@ const playAgain = () => {
     </div>
 
     <div class="button-container">
-      <RestartButton @play-again="playAgain"></RestartButton>
+      <RestartButton
+        @play-again="playAgain"
+        v-if="!gameState.isGameActive"
+      ></RestartButton>
       <ResetButton @start-new-game="startNewGame"></ResetButton>
     </div>
   </div>
