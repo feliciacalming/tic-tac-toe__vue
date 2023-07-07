@@ -2,18 +2,20 @@
 import { ref } from "vue";
 
 let username = ref("");
+let number = ref("ett");
 const emit = defineEmits(["addPlayer"]);
 
 const handleSubmit = (name: string) => {
   emit("addPlayer", name);
+  number.value = "två";
   username.value = "";
 };
 </script>
 
 <template>
   <form @submit.prevent="handleSubmit(username)">
-    <input type="text" v-model="username" placeholder="användarnamn" />
-    <button type="button">+ Lägg till spelare</button>
+    <input type="text" v-model="username" :placeholder="`spelare ${number}`" />
+    <button type="submit">+ Lägg till spelare</button>
   </form>
 </template>
 
@@ -21,7 +23,7 @@ const handleSubmit = (name: string) => {
 input {
   text-align: center;
   background-color: white;
-  border: 1px solid black;
+  border: 2px solid black;
 }
 
 form {
