@@ -29,11 +29,13 @@ const addPlayer = (name: string) => {
 };
 
 const switchTurns = (index: number) => {
-  if (gameState.value.activePlayer == gameState.value.players[0]) {
-    gameState.value.activePlayer = gameState.value.players[1];
-  } else {
-    gameState.value.activePlayer = gameState.value.players[0];
-  }
+  setTimeout(() => {
+    if (gameState.value.activePlayer == gameState.value.players[0]) {
+      gameState.value.activePlayer = gameState.value.players[1];
+    } else {
+      gameState.value.activePlayer = gameState.value.players[0];
+    }
+  }, 100);
 
   markSquare(index);
   checkValues();
@@ -101,6 +103,7 @@ const playAgain = () => {
 
 <template>
   <AddPlayer
+    :players="gameState.players"
     @add-player="addPlayer"
     v-if="gameState.players.length < 2"
   ></AddPlayer>
