@@ -29,7 +29,7 @@ const active = ref(false);
   font-family: "Geologica", sans-serif;
   text-shadow: 1px 3px black;
   -webkit-text-stroke: 1px black;
-  color: rgb(235, 65, 136);
+  color: rgb(255, 82, 154);
 }
 
 .x {
@@ -43,6 +43,7 @@ const active = ref(false);
 @keyframes shine {
   0% {
     font-size: 4rem;
+    opacity: 0.5;
   }
 
   50% {
@@ -51,6 +52,7 @@ const active = ref(false);
 
   100% {
     font-size: 4rem;
+    opacity: 1;
   }
 }
 </style>
