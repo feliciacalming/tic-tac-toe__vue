@@ -29,7 +29,7 @@ const active = ref(false);
   font-family: "Geologica", sans-serif;
   text-shadow: 1px 3px black;
   -webkit-text-stroke: 1px black;
-  color: rgb(255, 82, 154);
+  color: var.$primary-color;
 }
 
 .x {

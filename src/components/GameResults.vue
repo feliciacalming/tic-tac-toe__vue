@@ -10,10 +10,10 @@ const props = defineProps<IGameResults>();
 </script>
 
 <template>
+  <span class="scoreboard__heading">{{ message }}</span>
   <div class="scoreboard">
-    <span class="scoreboard__heading">{{ message }}</span>
-
     <div class="scoreboard__players">
+      <h3>Poäng:</h3>
       <div class="scoreboard__player">
         <h4>{{ players[0].username }}</h4>
         {{ players[0].score }} poäng
@@ -28,8 +28,11 @@ const props = defineProps<IGameResults>();
 
 <style scoped lang="scss">
 .scoreboard {
-  display: flex;
   flex-direction: column;
+  padding: 10% 10% 20% 10%;
+  border-radius: 5px;
+  background-color: rgb(253, 253, 253);
+  border: 3px dashed rgb(41, 75, 169);
 
   &__heading {
     font-size: 2rem;

@@ -171,6 +171,12 @@ const playAgain = () => {
   }
 }
 
+.show-game {
+  h3 {
+    font-size: 1.5rem;
+  }
+}
+
 .button-container {
   display: flex;
   flex-direction: column;
