@@ -14,19 +14,19 @@ View live here: https://feliciacalming.github.io/tic-tac-toe__vue/
 
 ## Criterias:
 
-- Be able to choose a name for player X and O
-- Be able to play a game and get a winner
-- Not be able to make any more moves when the game is over
-- Start a new game
-- Use at least one component
+☑️ Be able to choose a name for player X and O
+☑️ Be able to play a game and get a winner
+☑️ Not be able to make any more moves when the game is over
+☑️ Start a new game
+☑️ Use at least one component
 
 ## Criterias for extra credit:
 
-- ☑️ Use at least three components
-- Save score history for the players
-- Show score statistics
-- Be able to shut down the browser, come back to the same game status as when you left
-- Be able to reset the game and start a new with other players
+☑️ Use at least three components
+☑️ Save score history for the players
+☑️ Show score statistics
+☑️ Be able to shut down the browser, come back to the same game status as when you left
+☑️ Be able to reset the game and start a new with other players
 
 ## Get started
 
