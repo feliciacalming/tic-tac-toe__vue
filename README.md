@@ -1,8 +1,10 @@
 # Tic Tac Toe
 
-A school assignment where the mission was to build a game of Tic Tac Toe with Vue.js and Vite. The criterias for passing and extra credit is listed further down.
+A school assignment where the mission was to build a game of Tic Tac Toe with Vue.js and Vite. The criterias for passing and extra credit is listed further down.  
 
-View live here: https://feliciacalming.github.io/tic-tac-toe__vue/
+
+View live here: https://feliciacalming.github.io/tic-tac-toe__vue/  
+
 <img width="402" alt="Skärmavbild 2023-08-01 kl  12 12 12" src="https://github.com/feliciacalming/tic-tac-toe__vue/assets/113439720/a2d55a43-f210-4d34-a3b6-fdd43bee825c"> 
 
 ## Tech stack
