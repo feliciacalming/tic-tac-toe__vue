@@ -10,6 +10,6 @@ export default defineConfig({
       },
     },
   },
-  plugins: [vue()],
   base: "/tic-tac-toe__vue/",
+  plugins: [vue()],
 });
