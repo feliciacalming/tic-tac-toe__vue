@@ -43,7 +43,7 @@ View live here: https://feliciacalming.github.io/tic-tac-toe__vue/
 ## Get started
 
 ```txt
- 1. git clone https://github.com/Medieinstitutet/inlamningsuppgift-1-feliciacalming
+ 1. git clone https://github.com/feliciacalming/tic-tac-toe__vue
  2. npm i
  3. npm run dev/build/preview
 ```
